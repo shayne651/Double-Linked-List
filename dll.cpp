@@ -16,16 +16,19 @@ public:
 	void printFromHead();
 	void printFromTail();
 private: 
-	node *head = new node;
-	node *tail = new node;
+	node *head;
+	node *tail;
 };
 
 DLinkedList::DLinkedList(int *arr, int arrSize){
+	head = new node;
+	tail = new node;
 	head->prev = tail;
 	tail->next = head; 
 	tail->prev = nullptr;
 	head->next = nullptr;
-	for(int i = 0; i <= arrSize-1; i++){
+	head->data = arr[0];
+	for(int i = 1; i <= arrSize-1; i++){
 		addToHead(*(arr+i));
 
 	}
@@ -48,7 +51,7 @@ void DLinkedList::addToHead(int data){
 void DLinkedList::printFromHead(){
 	node *tmp = new node;
 	tmp = head;
-	while(tmp->prev->prev != nullptr){
+	while(tmp->prev != nullptr){
 		cout << tmp->data << endl;
 		tmp = tmp->prev;
 	}
@@ -57,7 +60,7 @@ void DLinkedList::printFromHead(){
 void DLinkedList::printFromTail(){
 	node *tmp = new node;
 	tmp = tail->next;
-	while(tmp->next != nullptr){
+	while(tmp != nullptr){
 		cout << tmp->data << endl;
 		tmp = tmp->next;
 	}
