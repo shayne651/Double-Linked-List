@@ -13,6 +13,8 @@ class DLinkedList{
 public: 
 	DLinkedList(int* arr, int arrSize);
 	void addToHead(int data);
+	void addAtIndexFromHead(int index, int data);
+	void addAtIndexFromTail(int index, int data);
 	void printFromHead();
 	void printFromTail();
 private: 
@@ -66,12 +68,45 @@ void DLinkedList::printFromTail(){
 	}
 }
 
+void DLinkedList::addAtIndexFromHead(int index, int data){
+	node *holder = head;
+	node *tmp = new node;
+	tmp->data = data;
+	for(int i = 0; i != index-2; i++){
+		holder = holder->prev;
+		//cout << "Holder Data: " << holder->data << endl;
+	}
+	tmp->next = holder;
+	tmp->prev = holder->prev;
+	holder->prev->next = tmp;
+	holder->prev = tmp;
+	holder = tmp;
+}
+
+void DLinkedList::addAtIndexFromTail(int index, int data){
+	node *holder = tail;
+	node *tmp = new node;
+	tmp->data = data;
+	for(int i = 0; i != index; i++){
+		holder = holder->next;
+		//cout << "Holder Data: " << holder->data << endl;
+	}
+	tmp->next = holder;
+	tmp->prev = holder->prev;
+	holder->prev->next = tmp;
+	holder->prev = tmp;
+	holder = tmp;
+}
+
 int main(int argc, char const *argv[])
 {
 	/* code */
 	int data[] = {9,3,6,2,6,8,2,4,8};
 	int size = sizeof(data)/sizeof(int);
 	DLinkedList *dll = new DLinkedList(data, size);
-	dll->printFromTail();
+	//dll->printFromTail();
+	dll->addAtIndexFromTail(3,11);
+	dll->addAtIndexFromTail(7,123);
+	dll->printFromHead();
 	return 0;
 }
